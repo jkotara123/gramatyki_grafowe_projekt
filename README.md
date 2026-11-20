@@ -1,4 +1,5 @@
 # gramatyki_grafowe_projekt
+Robimy w pythonie
 
 - **P0:** Jakub Kotara i Szymon Miękina
 - **P1:** Stas Kochevenko
