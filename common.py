@@ -1,7 +1,7 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 # Rules
-import p0
+from p0 import P0
 
 
 class Bond:
@@ -76,7 +76,8 @@ class Tris(nx.DiGraph):
 			self.refine(po_tri)
 		else:
 			# apply rule P0
-			p0.apply(self, tri)
+			p = P0(self, tri)
+			if p.iff(): p.apply()
 
 	def assert_tri(self, tri):
 		"""Assert that the triangle is valid. """
