@@ -80,30 +80,32 @@ class TriMesh(nx.DiGraph):
 		# find refinement edge
 		for bond in tri["bonds"]:
 			if bond.refine_edge:
-				return bond.b
+				return bond
 
 		return None
 
 	def compat_divisible(self, t):
 		"""Test if triangle is compatibly divisible. """
 		# find refinement edge
-		refine_edge_b = self.peak_opposite(t)
+		refine_edge_bond = self.peak_opposite(t)
 		# no refinement edge found
-		if refine_edge_b is None:
+		if refine_edge_bond is None:
 			return False
+		if refine_edge_bond.boundary:
+			return True
 		# get adjacent triangle for that edge
-		neigh_t, neigh_b = self.neigh(t, refine_edge_b)
+		neigh_t, neigh_b = self.neigh(t, refine_edge_bond.b)
 		# no neighbour - not a refinement edge
 		if neigh_t is None:
 			return False
 		neigh_tri = self.nodes[neigh_t]
 		neigh_bond = neigh_tri["bonds"][neigh_b]
-		return neigh_bond.boundary or neigh_bond.refine_edge
+		return neigh_bond.refine_edge
 
 	def refine(self, t):
 		"""Try refining the triangle mesh. """
-		b = self.peak_opposite(t)
-		po_t, _ = self.neigh(t, b)
+		bond = self.peak_opposite(t)
+		po_t, _ = self.neigh(t, bond.b)
 		if not self.compat_divisible(t):
 			# fingers crossed it doesn't loop forever
 			self.refine(po_t)

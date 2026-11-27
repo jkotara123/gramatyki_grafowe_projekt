@@ -35,5 +35,11 @@ def test_compat_div_refine_to_boundary():
 	g.nodes[T1]["bonds"][1].boundary = True
 	# glue the tris by the refinement edge and boundary edge
 	g.glue_tris(T0, 0, T1, 1)
-	assert g.compat_divisible(T0)
+	assert not g.compat_divisible(T0)
 	assert not g.compat_divisible(T1)
+
+def test_compat_div_refine_and_boundary():
+	g = make_two_tris()
+	# mark T1/1 (bond 1) as boundary
+	g.nodes[T0]["bonds"][0].boundary = True
+	assert g.compat_divisible(T0)
