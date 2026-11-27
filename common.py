@@ -1,6 +1,5 @@
 from math import sqrt
 import networkx as nx
-import matplotlib.pyplot as plt
 # Rules
 from p0 import P0
 
@@ -127,15 +126,3 @@ class TriMesh(nx.DiGraph):
 			for bond in bonds
 		)
 		assert refine_edge_cnt == 1
-
-
-def tris_vis_cp(g, pos=None):
-	if pos is None:
-		pos = nx.spring_layout(g, seed=42)
-	
-	nodes = [
-
-	]
-	fig, ax = plt.subplots(figsize=(10, 7))
-	nx.draw_networkx_nodes()
-	plt.show()

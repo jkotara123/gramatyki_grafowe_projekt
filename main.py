@@ -1,13 +1,17 @@
-from common import TriMesh, tris_vis_cp
+from common import TriMesh
+from draw import trimesh_vis_cp
+
+
+T0 = "T0" # label
+T1 = "T1" # label
 
 
 if __name__ == "__main__":
 	g = TriMesh()
-	t0 = "T0" # label
-	t1 = "T1" # label
-	g.add_tri(t0)
-	g.add_tri(t1)
-	g.glue_tris(t0, 0, t1, 0)
-	g.assert_tri(t0)
-	g.assert_tri(t1)
-	tris_vis_cp(g)
+	vert_pos = [(-1,-1), (0,+1),(+1,-1)]
+	g.add_tri(T0, vert_pos)
+	g.add_tri(T1, vert_pos)
+	g.glue_tris(T0, 0, T1, 0)
+	g.assert_tri(T0)
+	g.assert_tri(T1)
+	trimesh_vis_cp(g)
