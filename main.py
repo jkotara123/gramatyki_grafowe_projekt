@@ -14,4 +14,5 @@ if __name__ == "__main__":
 	g.glue_tris(T0, 0, T1, 0)
 	g.assert_tri(T0)
 	g.assert_tri(T1)
+	g.refine(T0)
 	trimesh_vis_cp(g)
