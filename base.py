@@ -1,16 +1,16 @@
 class Rule:
 	"""Abstract base class for rules. """
 
-	def __init__(self, g, tri):
+	def __init__(self, g, t):
 		"""Creates an application attempt of a production for a given triangle 
-		tri and, possibly, for triangles related to tri. """
+		t and, possibly, for triangles related to triangle t. """
 		self.g = g
-		self.tri = tri
+		self.t = t
 
 	@property
-	def tri_data(self):
-		"""Triangle data (refine flag + bonds + verts) for tri. """
-		return self.g.nodes[self.tri]
+	def tri(self):
+		"""Triangle data (refine flag + bonds + verts) for triangle t. """
+		return self.g.nodes[self.t]
 
 	def iff(self):
 		"""Rule criteria, if satisfied the rule can be applied. """
