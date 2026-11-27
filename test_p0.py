@@ -1,8 +1,9 @@
-from common import Tris
+from common import TriMesh
 from p0 import P0
 
+
 def test_p0():
-	g = Tris()
+	g = TriMesh()
 	t = "T0" # label
 	g.add_tri(t)
 	p = P0(g, t)

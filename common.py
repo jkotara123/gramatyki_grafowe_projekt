@@ -12,21 +12,30 @@ class Bond:
 		self.break_edge = break_edge
 
 
-class Tris(nx.DiGraph):
+class TriMesh(nx.DiGraph):
 	"""Badly implemented representation of the CP-graph. """
 
-	def add_tri(self, tri):
-		"""Add new triangle. """
+	def __init__(self):
+		"""Initalize empty CP-graph with an empty compatible stack. """
+		super().__init__() # initialize the parent class
+		self.compat_stack = [] # compatible triangles stack
+
+	def add_tri(self, tri, vert_pos):
+		"""Add new triangle. Vertex positions should consist of 3 coord pairs: 
+		`[(x0,y0), (x1,y1), (x2,y2)]`. """
+		assert len(vert_pos) == 3
 		self.add_node(
 			tri, 
 			refine=False, # mark for refinement
 			# TODO: maybe pick the longest edge and not just the first?
 			# (see "Newest Vertex Bisection of Triangles Algorithm" page 7)
-			bonds=[Bond(0, refine_edge=True), Bond(1), Bond(2)] # bonds
+			bonds=[Bond(0, refine_edge=True), Bond(1), Bond(2)], # bonds
+			verts=vert_pos # vertex positions
 		)
 
 	def glue_tris(self, tri_a, bond_a, tri_b, bond_b):
 		"""Glue two triangles to each other, forming an edge. """
+		# TODO: handle vertex positions?
 		self.add_edge(
 			tri_a, tri_b,
 			from_bond=bond_a, to_bond=bond_b
@@ -47,6 +56,7 @@ class Tris(nx.DiGraph):
 		return None, None
 
 	def peak_opposite(self, tri):
+		"""Obtain edge that is opposite to the peak vertex. """
 		tri_data = self.nodes[tri]
 		# find refinement edge
 		for bond_data in tri_data["bonds"]:
@@ -69,6 +79,7 @@ class Tris(nx.DiGraph):
 		return neigh_bond_data.boundary or neigh_bond_data.refine_edge
 
 	def refine(self, tri):
+		"""Try refining the triangle mesh. """
 		bond = self.peak_opposite(tri)
 		po_tri, _ = self.neigh(tri, bond)
 		if not self.compat_divisible(tri):

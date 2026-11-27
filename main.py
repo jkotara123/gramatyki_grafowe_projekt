@@ -1,8 +1,8 @@
-from common import Tris, tris_vis_cp
+from common import TriMesh, tris_vis_cp
 
 
 if __name__ == "__main__":
-	g = Tris()
+	g = TriMesh()
 	t0 = "T0" # label
 	t1 = "T1" # label
 	g.add_tri(t0)
